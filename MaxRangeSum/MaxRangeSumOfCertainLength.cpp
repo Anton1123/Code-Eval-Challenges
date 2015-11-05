@@ -1,0 +1,88 @@
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <vector>
+
+using namespace std;
+
+int max(int a, int b)
+{
+	if (a > b)
+		return a;
+	else return b;
+}
+
+int sumof(vector<int> values, int j, int k) //sum of values in the vector from position j to k
+{
+	int sum = 0;
+	for(int i = j; i < k + 1; ++i)
+	{
+		sum = sum + values[i];
+	}
+	return sum;
+}
+
+
+int maxSubArray(vector<int> values, int periodLength)
+{
+	int max_so_far = 0;
+    int curr_max = 0;
+	for(int i = 0; i < (values.size() - periodLength + 1); ++i)
+	{
+		curr_max = sumof(values, i, i + periodLength - 1);
+		max_so_far = max(max_so_far, curr_max);
+	}
+	
+	return max_so_far;
+}
+
+int main(int argc, char *argv[]) 
+{
+	std::vector<vector<int> > Values; //to hold the values of the stock price change
+    std::vector<int> Periods; //Range values for how long the subarray will be
+	ifstream file(argv[1]);
+    std::string line; //for the txt file input
+    std::string token; //for the subtring that will be converted from char to int
+    int value = 0; //for holding the value of stock change
+    int period = 0; //for holding the value of the range
+	int count = 0;// for holding how many total cases
+    
+    while (!file.eof()) 
+	{
+		getline(file, line);
+		if(line.length() == 0)
+			continue;
+		else
+		{
+			int pos = line.find(";");
+			token = line.substr(0, pos);
+			period = atoi(token.c_str());
+			Periods.push_back(period); 
+			line.erase(0, pos + 1);
+			
+			std::vector<int> list; // temporary list of values to be pushed back into the 2-d vector
+	
+			while ((pos = line.find(" ")) != std::string::npos )
+			{
+				token = line.substr(0,pos);
+				value = atoi(token.c_str());
+				line.erase(0, pos + 1);	
+				list.push_back(value);	
+			}
+			value = atoi(line.c_str());
+			list.push_back(value);
+			
+			Values.push_back(list);
+	    
+	    	++count;
+		}
+	}
+	
+	for(int i = 0; i < count; ++i) // could replace count with Values.size()
+	{
+		cout << maxSubArray(Values[i], Periods[i]);
+		cout << endl;
+	}
+
+	return 0;
+} 
