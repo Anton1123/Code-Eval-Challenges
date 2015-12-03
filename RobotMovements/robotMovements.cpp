@@ -14,7 +14,10 @@ int step(std::vector<std::vector<int> > grid, int i, int j)
 
     grid[i][j] = 1;
 
-    return step(grid, i - 1, j) + step(grid, i + 1, j) + step(grid, i, j - 1) + step(grid, i, j + 1);
+    return step(grid, i - 1, j) +
+           step(grid, i + 1, j) +
+           step(grid, i, j - 1) +
+           step(grid, i, j + 1);
 }
 
 
