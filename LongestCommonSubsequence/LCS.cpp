@@ -1,11 +1,15 @@
+/*
+You are given two sequences. Write a program to determine the longest common subsequence between the two strings
+https://www.codeeval.com/open_challenges/6/
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
 
 using namespace std;
 
-string LCS(string string1, string string2)
-{
+string LCS(string string1, string string2) {
     int m = string1.length();
     int n = string2.length();
     string substring1 = string1.substr(0, (m - 1 < 0) ? 0 : m - 1);
@@ -15,23 +19,18 @@ string LCS(string string1, string string2)
         return "";
     else if (string1[m - 1] == string2[n - 1])
         return LCS(substring1, substring2) + string1[m - 1];
-    else
-    {
+    else {
         string a = LCS(string1, substring2);
         string b = LCS(substring1, string2);
         return (a.length() > b.length()) ? a : b;
     }
 }
 
-
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     ifstream infile;
-
     infile.open(argv[1]);
 
-    while(!infile.eof())
-    {
+    while(!infile.eof()) {
         string str1, str2;
 
         getline(infile, str1, ';');
@@ -43,8 +42,6 @@ int main(int argc, char* argv[])
             continue;
 
         cout << LCS(str1, str2) << endl;
-
     }
-
     return 0;
 }

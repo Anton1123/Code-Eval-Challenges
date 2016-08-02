@@ -1,3 +1,6 @@
+/* prints the sum of all integers from file 
+   https://www.codeeval.com/open_challenges/24/
+*/
 #include <iostream>
 #include <fstream>
 #include <sstream>
