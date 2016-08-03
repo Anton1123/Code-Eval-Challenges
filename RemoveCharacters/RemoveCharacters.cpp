@@ -6,10 +6,8 @@ https://www.codeeval.com/open_challenges/13/
 */
 
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
