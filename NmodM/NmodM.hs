@@ -20,5 +20,5 @@ wordsWhen p s =  case dropWhile p s of
                             where (w, s'') = break p s'
 
 mymod :: [String] -> String
-mymod a | (head a) < (last a) = (head a)
+mymod a | (read (head a) :: Int) < (read (last a) :: Int) = (head a)
         | otherwise = mymod ((show ((read (head a) :: Int) - (read (last a) :: Int))) : (tail a))
