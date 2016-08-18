@@ -10,7 +10,7 @@ import System.Environment (getArgs)
 main = do
     [inpFile] <- getArgs
     input <- readFile inpFile
-    mapM_ print $ map hex2dec $ lines input
+    mapM_ print $ map (hex2dec 0) (lines input)
 
 hexChar :: Char -> Integer
 hexChar c
@@ -32,7 +32,6 @@ hexChar c
 	  | c == 'f' = 15
 	  | otherwise     = 0
 
-hex2dec :: String -> Integer
-hex2dec str = go (reverse str)
-	  where go []     = 0
-	        go (x:xs) = hexChar x + 16 * go xs
+hex2dec :: Integer -> String -> Integer
+hex2dec acc [] = acc
+hex2dec acc (x:xs) = hex2dec (acc * 16 + hexChar x) xs
