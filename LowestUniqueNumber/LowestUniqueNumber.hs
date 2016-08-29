@@ -19,17 +19,26 @@ https://www.codeeval.com/open_challenges/103/
 -}
 
 import System.Environment (getArgs)
+import Data.Maybe (fromJust)
+import Data.List (elemIndex)
 
 main = do
-	[inpFile] <- getArgs
-	input <- readFile inpFile
-	mapM_ print $ map mymin $ map uniqify $ (map . map) (read :: String -> Integer) $ map words $ lines input
+  [inpFile] <- getArgs
+  input <- readFile inpFile
+  let lines_ = map (map (read :: String -> Integer) . words) (lines input)
+  mapM_ (print . fromJust_) $ zipWith elemIndex (map (mymin . uniqify) lines_) lines_
 
 uniqify :: [Integer] -> [Integer]
 uniqify [] = []
-uniqify (x:xs) | elem x xs = uniqify $ filter (/=x) xs
+uniqify (x:xs) | x `elem` xs = uniqify $ filter (/=x) xs
                | otherwise = x : uniqify xs
 
 mymin :: [Integer] -> Integer
 mymin [] = 0
 mymin xs = minimum xs
+
+fromJust_ :: Num a => Maybe a -> a
+fromJust_ Nothing = 0
+fromJust_ (Just x) = x + 1 -- convert to "1-index"
+
+-- lpaste with suggestions saved for later (http://lpaste.net/181404)
